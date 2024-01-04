@@ -14,3 +14,9 @@ because it does recursively and launch docker command into app image
 
 ## JPA-HIBERNATE:
 https://mkyong.com/spring-boot/spring-boot-spring-data-jpa-mysql-example/
+
+## SECURITY
+https://springjavatutorial.medium.com/spring-security-login-form-with-database-authentication-9adc66f889dc
+ - Instead of **javax.persistence** springboot 3 uses **jakarta.persistence**
+ - This Api doesn't manage roles: https://wankhedeshubham.medium.com/spring-boot-security-with-userdetailsservice-and-custom-authentication-provider-3df3a188993f
+ - 

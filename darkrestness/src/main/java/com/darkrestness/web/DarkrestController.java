@@ -21,4 +21,18 @@ public class DarkrestController {
     public ResponseEntity<String> getHello() {
         return new ResponseEntity<>(restService.getHello(), HttpStatus.OK) ;
     }
+
+    @GetMapping("/")
+    public String greeting() {
+        return "index";
+    }
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        return "redirect:/login";
+    }
 }
