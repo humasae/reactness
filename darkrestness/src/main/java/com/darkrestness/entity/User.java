@@ -3,7 +3,7 @@ package com.darkrestness.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "DARKUSERS")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

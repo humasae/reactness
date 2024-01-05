@@ -17,6 +17,11 @@ https://mkyong.com/spring-boot/spring-boot-spring-data-jpa-mysql-example/
 
 ## SECURITY
 https://springjavatutorial.medium.com/spring-security-login-form-with-database-authentication-9adc66f889dc
+https://tiagoamp.medium.com/rest-api-with-spring-boot-3-part-4-a09e5591b942
  - Instead of **javax.persistence** springboot 3 uses **jakarta.persistence**
  - This Api doesn't manage roles: https://wankhedeshubham.medium.com/spring-boot-security-with-userdetailsservice-and-custom-authentication-provider-3df3a188993f
- - 
+
+## Additional libraries
+https://projectlombok.org
+ - https://projectlombok.org/features/Data
+ - https://projectlombok.org/features/constructor
