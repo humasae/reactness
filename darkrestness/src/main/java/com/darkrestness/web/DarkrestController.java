@@ -3,6 +3,7 @@ package com.darkrestness.web;
 import com.darkrestness.DarkrestnessApplication;
 import com.darkrestness.entity.User;
 import com.darkrestness.mapper.UserMapper;
+import com.darkrestness.service.AuthenticationService;
 import com.darkrestness.service.RestService;
 import com.darkrestness.service.UserService;
 import jakarta.validation.Valid;
@@ -20,11 +21,13 @@ public class DarkrestController {
 
     private final RestService restService;
     private final UserService userService;
+    private final AuthenticationService authenticationService;
     private final UserMapper mapper;
 
-    public DarkrestController(RestService restService, UserService userService, UserMapper mapper) {
+    public DarkrestController(RestService restService, UserService userService, AuthenticationService authenticationService, UserMapper mapper) {
         this.restService = restService;
         this.userService = userService;
+        this.authenticationService = authenticationService;
         this.mapper = mapper;
     }
     @GetMapping(value="/hello", produces = "application/json")
@@ -32,13 +35,13 @@ public class DarkrestController {
         return new ResponseEntity<>(restService.getHello(), HttpStatus.OK) ;
     }
 
-    @GetMapping("/")
-    public String greeting() {
-        return "index";
-    }
-    @GetMapping("/login")
-    public String login() {
-        return "login";
+
+
+    // Users
+    @PostMapping("/login")
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody @Valid AuthenticationRequest request) {
+        var token = authenticationService.authenticate(request.getEmail(), request.getPassword());
+        return ResponseEntity.ok(new AuthenticationResponse(token));
     }
 
     @GetMapping("/logout")
@@ -55,6 +58,19 @@ public class DarkrestController {
 
     @PostMapping
     public ResponseEntity<AppUserResponse> createUser(@RequestBody @Valid AppUserRequest request) throws Exception {
+        var user = mapper.toModel(request);
+        user = userService.save(user);
+        var resp = mapper.toResponse(user);
+        return ResponseEntity.created(URI.create(user.getId().toString())).body(resp);
+    }
+
+    @GetMapping("/usersAdd")
+    public ResponseEntity<AppUserResponse> createUser2() throws Exception {
+        AppUserRequest request = new AppUserRequest();
+        request.setName("test");
+        request.setUserName("UserTest");
+        request.setEmail("a@a.as");
+        request.setPassword("admin");
         var user = mapper.toModel(request);
         user = userService.save(user);
         var resp = mapper.toResponse(user);
