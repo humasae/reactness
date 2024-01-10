@@ -1,5 +1,8 @@
 # README
 
+
+## BACKEND
+
 ## problems with maven project
 https://stackoverflow.com/questions/15046764/intellij-idea-not-recognizing-classes-specified-in-maven-dependencies
 
@@ -26,3 +29,8 @@ https://medium.com/@rameez.s.shaikh/spring-boot-3-spring-security-6-in-depth-und
 https://projectlombok.org
  - https://projectlombok.org/features/Data
  - https://projectlombok.org/features/constructor
+ 
+ 
+ 
+## FRONTEND
+https://tailwindcss.com/docs/guides/vite

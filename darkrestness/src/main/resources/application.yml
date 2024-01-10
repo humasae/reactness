@@ -13,6 +13,11 @@ spring:
       hibernate.format_sql: true
       hibernate:
         globally_quoted_identifiers: true
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
 
 secret:
   key: ${JWT_SECRET:1234567890qwertyuiop}
