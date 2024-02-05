@@ -5,6 +5,7 @@ const baseURL = 'http://localhost:8081/api/'; // Reemplaza con la URL de tu API
 
 const api: AxiosInstance = axios.create({
   baseURL,
+  withCredentials: true,
   // Puedes agregar aquí cualquier configuración adicional de Axios según tus necesidades
 });
 

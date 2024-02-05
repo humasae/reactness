@@ -1,18 +1,36 @@
 // src/components/Home.tsx
-import React from 'react';
-import UserResponse from '../types/UserResponse'
+import React, { useState } from 'react';
+import User from '../types/User'
+import authService from '../services/authService';
 
 interface HomeProps {
-  user: UserResponse | null;
+  user: User | null;
 }
 
 const Home: React.FC<HomeProps> = ({ user }) => {
+  const [message, setMessage] = useState('');
+  const handleClick = async () => {
+    const hello = await authService.getHelloWithInternalCredentials();
+    console.log(hello);
+    setMessage(hello);
+  };
+  // useState returns an array with 2 items, the variable and a function than manages that variable an force the re-render of the DOM
   return (
     <div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
       <section>
         {user ? <h2>Welcome {user.username}!</h2> : <h2>Welcome!</h2>}
       </section>
+      <section>
+        {user ? <h2>Email {user.email}!</h2> : <h2>Email!</h2>}
+      </section>
+      <section>
+        {user ? <h2>pass {user.password}!</h2> : <h2>password!</h2>}
+      </section>
+      <br/>
+      <div>
+        <h1>Llamar a Hello: {message}</h1>
+        <button onClick={handleClick}>Llamar a Hello</button>
+      </div>
     </div>
   );
 };

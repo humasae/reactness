@@ -1,16 +1,17 @@
 // src/pages/auth/LoginPage.tsx
 import React from 'react';
-import Login from '../../components/Login';
+import LoginObject from '../../components/LoginObject';
+import User from '../../types/User';
 
 const AuthLogin: React.FC = () => {
-  const handleLogin = (username: string, email: string, password: string) => {
+  const handleLogin = (user: User) => {
     // Lógica de autenticación específica de esta página
   };
 
   return (
     <div>
-      <h2>Authentication - Login</h2>
-      <Login onLogin={handleLogin} />
+      <h2>Authentication - Login - MEDIANT INTERFAZ!!!</h2>
+      <LoginObject onLogin={handleLogin} />
     </div>
   );
 };

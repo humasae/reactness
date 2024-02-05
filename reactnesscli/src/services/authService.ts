@@ -1,7 +1,6 @@
 // src/services/authService.ts
 import api from './api';
 import User from '../types/User';
-import UserResponse from '../types/UserResponse';
 
 interface LoginResponse {
   // Define la estructura de la respuesta del servidor después de la autenticación
@@ -18,7 +17,7 @@ interface LoginResponse {
 const authService = {
   async login(username: string, email: string, password: string): Promise<LoginResponse> {
     try {
-      let response = await api.post('/login', { username, email, password });
+      const response = await api.post('/login', { username, email, password });
       console.log("hoooola authService");
       console.log(response);
       
@@ -31,14 +30,55 @@ const authService = {
   async loginWithObject(user: User) {
     console.log('esto es login with user');
     console.log(user)
-    const newUser: UserResponse = {
-      id: 1,
-      username: user.username,
-      email: user.email,
+
+    const username = user.username;
+    const email = user.email;
+    const password = user.password;
+
+    try {
+      const response = await api.post('/login', {username, email, password });
+      console.log("hoooola authService");
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+
+    
+
+  },
+  async getHelloFromApi(token: string) {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` }
     };
+    try{
+      console.log('lanzamos el get hello hellouuuuu');
+      const response = await api.get(
+        '/hello',
+        config
+      )
+      console.log(response);
+      return response.data;
 
-    console.log(newUser);
+    } catch(error) {
+      return error;
+    }
+  },
+  async getHelloWithInternalCredentials() {
+    // const config = {
+    //   headers: { Authorization: `Bearer ${token}` }
+    // };
+    try{
+      console.log('lanzamos el get hello hellouuuuu');
+      const response = await api.get(
+        '/hello'
+      )
+      console.log(response);
+      return response.data;
 
+    } catch(error) {
+      return error;
+    }
   }
 };
 

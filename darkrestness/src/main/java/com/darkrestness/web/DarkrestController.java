@@ -7,7 +7,9 @@ import com.darkrestness.service.AuthenticationService;
 import com.darkrestness.service.RestService;
 import com.darkrestness.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.darkrestness.dto.*;
@@ -42,7 +44,19 @@ public class DarkrestController {
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody @Valid AuthenticationRequest request) {
         var token = authenticationService.authenticate(request.getEmail(), request.getPassword());
-        return ResponseEntity.ok(new AuthenticationResponse(token));
+        String accessToken = token;
+        HttpHeaders responseHeaders = new HttpHeaders();
+        ResponseCookie cookie = ResponseCookie.from("accessToken", accessToken)
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(180000)
+                .build();
+        responseHeaders.add(HttpHeaders.SET_COOKIE, cookie.toString());
+
+
+//        response.addC
+        return ResponseEntity.ok().headers(responseHeaders).body(new AuthenticationResponse(token));
     }
 
     @GetMapping("/logout")

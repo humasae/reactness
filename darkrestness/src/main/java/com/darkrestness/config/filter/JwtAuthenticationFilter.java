@@ -5,6 +5,7 @@ import com.darkrestness.service.TokenService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -31,13 +32,36 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final UserDetailsService userService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+
+        String cookieToken = null;
+        String username = null;
+
+        if(request.getCookies() != null){
+            for(Cookie cookie: request.getCookies()){
+                if(cookie.getName().equals("accessToken")){
+                    cookieToken = cookie.getValue();
+                    System.out.println("- cookie token: " + cookieToken);
+                }
+            }
+        }
+        if (cookieToken == null) {
             filterChain.doFilter(request, response);
             return;
         }
+        //This is for auth with token header.
+//        String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+//        if (cookieToken == null && (authorizationHeader == null || !authorizationHeader.startsWith("Bearer "))) {
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
         try {
-            String token = tokenService.getTokenFrom(authorizationHeader);
+            String token = "";
+//            if(authorizationHeader.startsWith("Bearer ")) {
+//                token = tokenService.getTokenFrom(authorizationHeader);
+//                System.out.println("- token: " + cookieToken);
+//            }
+            token = cookieToken;
+
             String userEmail = tokenService.getSubjectFrom(token);
             UserDetails user = userService.loadUserByUsername(userEmail);
             var authenticationToken = new UsernamePasswordAuthenticationToken(userEmail, null, user.getAuthorities());
