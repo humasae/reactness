@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 
 const HomePage: React.FC = () => {
   const location = useLocation();
-  let userReceived = location.state.user;
+  const userReceived = location.state.user;
 
   console.log('hola HomePage.tsx!!')
   console.log(userReceived)

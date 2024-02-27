@@ -1,13 +1,21 @@
 // src/pages/TutorialPage.tsx
 import React from 'react';
-import Counter from '../components/Counter';
+// import Counter from '../components/Counter';
+import MessageContainer from '../components/MessageContainer';
+import MessageSender from '../components/MessageSender';
+import { MessageProvider } from "../providers/MessageProvider";
 
 
-const Tutorial: React.FC<{}> = () => {
+const Tutorial: React.FC = () => {
   return (
     <div>
-      <h2>Tutorial Page UseEffect</h2>
-      <Counter />
+      <h2>Tutorial Page useState</h2>
+      {/* <Counter /> */}
+      <MessageProvider>
+        <MessageContainer/>
+        <MessageSender/>
+      </MessageProvider>
+
     </div>
   );
 };
