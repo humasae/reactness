@@ -7,12 +7,13 @@ import { MessageProvider } from "../providers/MessageProvider";
 
 
 const Tutorial: React.FC = () => {
+  const losMessagesIniciales = ['el primero', 'el segundo']
   return (
     <div>
       <h2>Tutorial Page useState</h2>
       {/* <Counter /> */}
       <MessageProvider>
-        <MessageContainer/>
+        <MessageContainer unosMessages={losMessagesIniciales}/>
         <MessageSender/>
       </MessageProvider>
 
